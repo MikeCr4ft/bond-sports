@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bond-sports-db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: bond
+      POSTGRES_PASSWORD: bond
+      POSTGRES_DB: bond_sports
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
