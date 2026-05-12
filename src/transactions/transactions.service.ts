@@ -28,6 +28,34 @@ export class TransactionsService {
     });
   }
 
+  async getStatement(accountId: string, from?: Date, to?: Date) {
+    const account = await this.prisma.account.findUnique({
+      where: { accountId },
+    });
+    if (!account) throw new NotFoundException(`Account ${accountId} not found`);
+
+    return this.prisma.transaction.findMany({
+      where: {
+        accountId,
+        ...(from || to
+          ? {
+              transactionDate: {
+                ...(from && { gte: from }),
+                ...(to && { lte: to }),
+              },
+            }
+          : {}),
+      },
+      orderBy: { transactionDate: 'desc' },
+      select: {
+        transactionId: true,
+        type: true,
+        value: true,
+        transactionDate: true,
+      },
+    });
+  }
+
   async withdraw(accountId: string, amount: number) {
     return this.prisma.$transaction(async (tx) => {
       const [account] = await tx.$queryRaw<Account[]>`
