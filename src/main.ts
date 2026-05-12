@@ -6,7 +6,9 @@ import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: ['log', 'warn', 'error'] });
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'warn', 'error'],
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -20,10 +22,16 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Bond Sports — Account Management API')
-    .setDescription('Bank account management: create accounts, deposit, withdraw, view statement.')
+    .setDescription(
+      'Bank account management: create accounts, deposit, withdraw, view statement.',
+    )
     .setVersion('1.0')
     .build();
-  SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, config));
+  SwaggerModule.setup(
+    'api/docs',
+    app,
+    SwaggerModule.createDocument(app, config),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }
