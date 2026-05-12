@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "mcp__github__issue_write"
+      "mcp__github__issue_write",
+      "mcp__github__list_issues",
+      "Bash(git checkout *)",
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "WebSearch",
+      "Bash(npx jest *)",
+      "Bash(npx prettier *)"
     ]
   }
 }
